@@ -1,0 +1,205 @@
+mysql> select Gym_id,Username from Review UNION select Gym_id,Username from Rating;
++--------+----------+
+| Gym_id | Username |
++--------+----------+
+|      1 | Jay69    |
+|      2 | Adi99    |
+|      4 | Kaushik  |
+|      4 | dan12    |
+|      5 | Jay69    |
+|      9 | sam      |
+|     10 | anu      |
+|      3 | Chicken  |
+|      6 | dan12    |
+|      8 | Chicken  |
+|      1 | Chicken  |
+|      2 | anu      |
+|      3 | sam      |
+|      3 | Jay69    |
+|      5 | dan12    |
+|      5 | Adi99    |
+|      7 | Chicken  |
+|      7 | anu      |
+|      6 | Adi99    |
+|      6 | Jay69    |
+|      8 | Jay69    |
+|      8 | sam      |
+|      9 | anu      |
+|      9 | Chicken  |
+|     10 | Adi99    |
+|     10 | sam      |
++--------+----------+
+26 rows in set (0.00 sec)
+mysql> select Gym_id,Username from Review UNION ALL select Gym_id,Username from Rating;
++--------+----------+
+| Gym_id | Username |
++--------+----------+
+|      1 | Jay69    |
+|      2 | Adi99    |
+|      4 | Kaushik  |
+|      4 | dan12    |
+|      5 | Jay69    |
+|      9 | sam      |
+|     10 | anu      |
+|      3 | Chicken  |
+|      6 | dan12    |
+|      8 | Chicken  |
+|      1 | Jay69    |
+|      2 | Adi99    |
+|      4 | Kaushik  |
+|      4 | dan12    |
+|      1 | Chicken  |
+|      2 | anu      |
+|      3 | sam      |
+|      3 | Jay69    |
+|      5 | dan12    |
+|      5 | Adi99    |
+|      7 | Chicken  |
+|      7 | anu      |
+|      6 | Adi99    |
+|      6 | Jay69    |
+|      8 | Jay69    |
+|      8 | sam      |
+|      9 | anu      |
+|      9 | Chicken  |
+|     10 | Adi99    |
+|     10 | sam      |
++--------+----------+
+30 rows in set (0.00 sec)
+mysql> select Review.Gym_id
+    -> from Review inner join Rating
+    -> where Review.Gym_id=Rating.Gym_id;
++--------+
+| Gym_id |
++--------+
+|      1 |
+|      1 |
+|      2 |
+|      2 |
+|      3 |
+|      3 |
+|      4 |
+|      4 |
+|      4 |
+|      4 |
+|      5 |
+|      5 |
+|      6 |
+|      6 |
+|      8 |
+|      8 |
+|      9 |
+|      9 |
+|     10 |
+|     10 |
++--------+
+20 rows in set (0.00 sec)
+mysql> select Review.Username
+    -> from Review inner join Rating
+    -> where Review.Gym_id=Rating.Gym_id;
++----------+
+| Username |
++----------+
+| Jay69    |
+| Jay69    |
+| Adi99    |
+| Adi99    |
+| Kaushik  |
+| Kaushik  |
+| dan12    |
+| dan12    |
+| Jay69    |
+| Jay69    |
+| sam      |
+| sam      |
+| anu      |
+| anu      |
+| Chicken  |
+| Chicken  |
+| dan12    |
+| dan12    |
+| Chicken  |
+| Chicken  |
++----------+
+20 rows in set (0.00 sec)
+mysql> select a.Gym_id,a.Gym_name
+    -> from gym a inner join Review b
+    -> where a.Gym_id=b.Gym_id;
++--------+-------------------------+
+| Gym_id | Gym_name                |
++--------+-------------------------+
+|      1 | Muscle Prime            |
+|      2 | 48Fitness               |
+|      3 | Cratus 1                |
+|      4 | Life Fitness            |
+|      4 | Life Fitness            |
+|      5 | The Crossone Fitness    |
+|      6 | Revival                 |
+|      8 | 9th Gear Fitness Club   |
+|      9 | Flex The Hardcore House |
+|     10 | Complete Fitness Club   |
++--------+-------------------------+
+10 rows in set (0.00 sec)
+mysql> select gym.Gym_id,gym.Gym_name
+    -> from gym left join Review
+    -> on gym.Gym_id=Review.Gym_id;
++--------+-------------------------+
+| Gym_id | Gym_name                |
++--------+-------------------------+
+|      1 | Muscle Prime            |
+|      2 | 48Fitness               |
+|      3 | Cratus 1                |
+|      4 | Life Fitness            |
+|      4 | Life Fitness            |
+|      5 | The Crossone Fitness    |
+|      6 | Revival                 |
+|      7 | Perfect Fitness Gym     |
+|      8 | 9th Gear Fitness Club   |
+|      9 | Flex The Hardcore House |
+|     10 | Complete Fitness Club   |
++--------+-------------------------+
+11 rows in set (0.00 sec)
+mysql> select gym.Gym_id,gym.Gym_name
+    -> from gym left join Review
+    -> on gym.Gym_id=Review.Gym_id
+    -> UNION
+    -> select gym.Gym_id,gym.Gym_name
+    -> from gym left join Rating
+    -> on gym.Gym_id=Rating.Gym_id;
++--------+-------------------------+
+| Gym_id | Gym_name                |
++--------+-------------------------+
+|      1 | Muscle Prime            |
+|      2 | 48Fitness               |
+|      3 | Cratus 1                |
+|      4 | Life Fitness            |
+|      5 | The Crossone Fitness    |
+|      6 | Revival                 |
+|      7 | Perfect Fitness Gym     |
+|      8 | 9th Gear Fitness Club   |
+|      9 | Flex The Hardcore House |
+|     10 | Complete Fitness Club   |
++--------+-------------------------+
+10 rows in set (0.00 sec)
+
+mysql> select user.User_name,user.User_mail
+    -> from user left join Review
+    -> on user.User_name=Review.Username
+    -> Union
+    -> select user.User_name,user.User_mail
+    -> from user left join Rating
+    -> on user.User_name=Rating.Username;
++-----------+-------------------+
+| User_name | User_mail         |
++-----------+-------------------+
+| anu       | anu@gmail.com     |
+| Adi99     | ash@gmail.com     |
+| Chicken   | chicken@gmail.com |
+| dan12     | dan@gmail.com     |
+| Jay69     | jay@gmail.com     |
+| Kaushik   | kaushik@gmail.com |
+| sam       | sam@gmail.com     |
++-----------+-------------------+
+7 rows in set (0.04 sec)
+
+

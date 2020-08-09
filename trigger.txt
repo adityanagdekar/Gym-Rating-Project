@@ -1,0 +1,14 @@
+DELIMITER $$
+create trigger t1 before insert on rating
+for each row
+begin
+if (new.rating < 0 || new.rating > 5) then
+signal SQLSTATE	'12345'
+set message_text="Rating out of range";
+end if;
+end$$
+
+DELIMITER ;
+
+
+INSERT INTO `rating`(`rating`, `Gym_id`, `Username`) VALUES (2,4,'dan12');

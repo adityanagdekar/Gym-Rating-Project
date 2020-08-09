@@ -1,0 +1,64 @@
+mysql> create table gym(Gym_id int unsigned primary key,
+    -> Gym_name varchar(30) , Gym_img varchar(450),
+    -> Gym_contact_no Bigint(12) unsigned,Gym_addres varchar(300),
+    -> Gym_location char(30));
+Query OK, 0 rows affected (0.90 sec)
+mysql>
+mysql> desc gym;
++----------------+---------------------+------+-----+---------+-------+
+| Field          | Type                | Null | Key | Default | Extra |
++----------------+---------------------+------+-----+---------+-------+
+| Gym_id         | int(10) unsigned    | NO   | PRI | NULL    |       |
+| Gym_name       | varchar(30)         | YES  |     | NULL    |       |
+| Gym_img        | varchar(450)        | YES  |     | NULL    |       |
+| Gym_contact_no | bigint(12) unsigned | YES  |     | NULL    |       |
+| Gym_addres     | varchar(300)        | YES  |     | NULL    |       |
+| Gym_location   | char(30)            | YES  |     | NULL    |       |
++----------------+---------------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+mysql>
+mysql> create table user(User_name varchar(30) primary key,
+    -> User_pass varchar(30),User_mobile_no Bigint(10) unsigned unique key,
+    -> User_mail varchar(100) unique key);
+Query OK, 0 rows affected (0.55 sec)
+mysql> desc user;
++----------------+---------------------+------+-----+---------+-------+
+| Field          | Type                | Null | Key | Default | Extra |
++----------------+---------------------+------+-----+---------+-------+
+| User_name      | varchar(30)         | NO   | PRI | NULL    |       |
+| User_pass      | varchar(30)         | YES  |     | NULL    |       |
+| User_mobile_no | bigint(10) unsigned | YES  | UNI | NULL    |       |
+| User_mail      | varchar(100)        | YES  | UNI | NULL    |       |
++----------------+---------------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql>mysql> create table Review (Gym_id int unsigned,
+    -> FOREIGN KEY(Gym_id) REFERENCES gym(Gym_id),
+    -> Username varchar(30),
+    -> FOREIGN KEY(Username) REFERENCES user(User_name),
+    -> review varchar(300));
+Query OK, 0 rows affected (0.57 sec)
+mysql> desc Review;
++----------+------------------+------+-----+---------+-------+
+| Field    | Type             | Null | Key | Default | Extra |
++----------+------------------+------+-----+---------+-------+
+| Gym_id   | int(10) unsigned | YES  | MUL | NULL    |       |
+| Username | varchar(30)      | YES  | MUL | NULL    |       |
+| review   | varchar(300)     | YES  |     | NULL    |       |
++----------+------------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+mysql> create table Rating(rating double(2,1) unsigned not null,
+    -> Gym_id int unsigned not null,
+    -> FOREIGN KEY(Gym_id) REFERENCES gym(Gym_id),
+    -> Username varchar(30) not null,
+    -> FOREIGN KEY(Username) REFERENCES user(User_name));
+Query OK, 0 rows affected (0.55 sec)
+mysql> desc Rating;
++----------+----------------------+------+-----+---------+-------+
+| Field    | Type                 | Null | Key | Default | Extra |
++----------+----------------------+------+-----+---------+-------+
+| rating   | double(2,1) unsigned | NO   |     | NULL    |       |
+| Gym_id   | int(10) unsigned     | NO   | MUL | NULL    |       |
+| Username | varchar(30)          | NO   | MUL | NULL    |       |
++----------+----------------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)

@@ -1,0 +1,205 @@
+mysql> create database if not exists Gymreview;
+Query OK, 1 row affected (0.22 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| book_db            |
+| emp_db             |
+| gymreview          |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| thane10aug         |
+| thane14sep         |
+| thane17aug         |
+| thane21sep         |
+| thane28sep         |
+| thane31aug         |
+| thane5sep          |
++--------------------+
+14 rows in set (0.02 sec)
+
+mysql> use Gymreview;
+Database changed
+mysql>
+mysql> create table gym(Gym_id int unsigned primary key,
+    -> Gym_name varchar(30) , Gym_img varchar(450),
+    -> Gym_contact_no Bigint(12) unsigned,Gym_addres varchar(300),
+    -> Gym_location char(30));
+Query OK, 0 rows affected (0.90 sec)
+mysql>
+mysql> desc gym;
++----------------+---------------------+------+-----+---------+-------+
+| Field          | Type                | Null | Key | Default | Extra |
++----------------+---------------------+------+-----+---------+-------+
+| Gym_id         | int(10) unsigned    | NO   | PRI | NULL    |       |
+| Gym_name       | varchar(30)         | YES  |     | NULL    |       |
+| Gym_img        | varchar(450)        | YES  |     | NULL    |       |
+| Gym_contact_no | bigint(12) unsigned | YES  |     | NULL    |       |
+| Gym_addres     | varchar(300)        | YES  |     | NULL    |       |
+| Gym_location   | char(30)            | YES  |     | NULL    |       |
++----------------+---------------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> create table user(User_name varchar(30) primary key,
+    -> User_pass varchar(30),User_mobile_no Bigint(10) unsigned unique key,
+    -> User_mail varchar(100) unique key);
+Query OK, 0 rows affected (0.55 sec)
+mysql> desc user;
++----------------+---------------------+------+-----+---------+-------+
+| Field          | Type                | Null | Key | Default | Extra |
++----------------+---------------------+------+-----+---------+-------+
+| User_name      | varchar(30)         | NO   | PRI | NULL    |       |
+| User_pass      | varchar(30)         | YES  |     | NULL    |       |
+| User_mobile_no | bigint(10) unsigned | YES  | UNI | NULL    |       |
+| User_mail      | varchar(100)        | YES  | UNI | NULL    |       |
++----------------+---------------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql>mysql> create table Review (Gym_id int unsigned,
+    -> FOREIGN KEY(Gym_id) REFERENCES gym(Gym_id),
+    -> Username varchar(30),
+    -> FOREIGN KEY(Username) REFERENCES user(User_name),
+    -> review varchar(300));
+Query OK, 0 rows affected (0.57 sec)
+
+mysql> alter table user
+    -> modify User_pass varchar(30) not null;
+Query OK, 0 rows affected (1.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table user
+    -> modify User_mobile_no Bigint(10) unsigned not null,
+    -> modify User_mail varchar(100) not null;
+Query OK, 0 rows affected (1.97 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+
+mysql> desc Review;
++----------+------------------+------+-----+---------+-------+
+| Field    | Type             | Null | Key | Default | Extra |
++----------+------------------+------+-----+---------+-------+
+| Gym_id   | int(10) unsigned | YES  | MUL | NULL    |       |
+| Username | varchar(30)      | YES  | MUL | NULL    |       |
+| review   | varchar(300)     | YES  |     | NULL    |       |
++----------+------------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> create table Rating(rating double(2,1) unsigned not null,
+    -> Gym_id int unsigned not null,
+    -> FOREIGN KEY(Gym_id) REFERENCES gym(Gym_id),
+    -> Username varchar(30) not null,
+    -> FOREIGN KEY(Username) REFERENCES user(User_name));
+Query OK, 0 rows affected (0.55 sec)
+mysql> desc Rating;
++----------+----------------------+------+-----+---------+-------+
+| Field    | Type                 | Null | Key | Default | Extra |
++----------+----------------------+------+-----+---------+-------+
+| rating   | double(2,1) unsigned | NO   |     | NULL    |       |
+| Gym_id   | int(10) unsigned     | NO   | MUL | NULL    |       |
+| Username | varchar(30)          | NO   | MUL | NULL    |       |
++----------+----------------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+mysql> alter table user
+    -> modify User_pass varchar(30) not null;
+Query OK, 0 rows affected (1.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table user
+    -> modify User_mobile_no Bigint(10) unsigned not null,
+    -> modify User_mail varchar(100) not null;
+Query OK, 0 rows affected (1.97 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table gym
+    -> modify Gym_name varchar(30) not null,
+    -> modify Gym_img varchar(450) not null,
+    -> modify Gym_contact_no Bigint(12) unsigned not null,
+    -> modify Gym_location char(30) not null;
+Query OK, 0 rows affected (0.87 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table gym
+    -> change Gym_addres Gym_address varchar(300) ;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table gym
+    -> modify Gym_address varchar(300) not null;
+Query OK, 0 rows affected (0.85 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc gym;
++----------------+---------------------+------+-----+---------+-------+
+| Field          | Type                | Null | Key | Default | Extra |
++----------------+---------------------+------+-----+---------+-------+
+| Gym_id         | int(10) unsigned    | NO   | PRI | NULL    |       |
+| Gym_name       | varchar(30)         | NO   |     | NULL    |       |
+| Gym_img        | varchar(450)        | NO   |     | NULL    |       |
+| Gym_contact_no | bigint(12) unsigned | NO   |     | NULL    |       |
+| Gym_address    | varchar(300)        | NO   |     | NULL    |       |
+| Gym_location   | char(30)            | NO   |     | NULL    |       |
++----------------+---------------------+------+-----+---------+-------+
+6 rows in set (0.05 sec)
+
+mysql> desc user;
++----------------+---------------------+------+-----+---------+-------+
+| Field          | Type                | Null | Key | Default | Extra |
++----------------+---------------------+------+-----+---------+-------+
+| User_name      | varchar(30)         | NO   | PRI | NULL    |       |
+| User_pass      | varchar(30)         | NO   |     | NULL    |       |
+| User_mobile_no | bigint(10) unsigned | NO   | UNI | NULL    |       |
+| User_mail      | varchar(100)        | NO   | UNI | NULL    |       |
++----------------+---------------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> insert into user values('Adi99','abc45678',7888888888,'ash@gmail.com'),
+    -> ('anu','anu45678',7896452316,'anu@gmail.com'),
+    -> ('Chicken','xyz123456',8585626279,'chicken@gmail.com'),
+    -> ('dan12','dan12345',8794162312,'dan@gmail.com'),
+    -> ('Jay69','abc45678',8787959562,'jay@gmail.com'),
+    -> ('Kaushik','abc123456',9694952201,'kaushik@gmail.com'),
+    -> ('sam','sam12345',7956134822,'sam@gmail.com');
+Query OK, 7 rows affected (0.20 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+mysql>
+mysql> insert into gym values(3,'Cratus 1','Uploads/cratus1.jpg',8291997719,'1st Floor,Rosemar Appt,holy Cross Road,Borivali','Borivali'),
+    -> (4,'Life Fitness','Uploads/Life-Fitness-Kalyan.jpg',8097109723,'1st Floor,Satlaj Building,MainRoad,Aarti Nagari,Kalyan','Kalyan'),
+    -> (5,'The Crossone Fitness','Uploads/Crossone-fitness-thane.jpg',9773357387,'The CrossoneFitness,Laxmi niwas Bldg,Thane','Thane'),
+    -> (6,'Revival','Uploads/Revival-Airoli.jpg',9773134617,'Sector 3,Airoli Rd,Navi Mumbai','Airoli'),
+    -> (7,'Perfect Fitness Gym','Uploads/Perfect-Fitness-Gym.jpg',2228208787,'Bus Depot,Opp. Sadbhakti Mandir,Jogeshwari','Jogeshwari'),
+    -> (8,'9th Gear Fitness Club','Uploads/9thGear.jpg',2225656065,'109,1st Floor,above Bata Show Room,Opp. Mulund Station,Mulund','Mulund'),
+    -> (9,'Flex The Hardcore House','Uploads/flex-dombivli.jpg',9920331697,'Gautameshwar Dham,Tondon Road,Dombivli','Dombivli'),
+    -> (10,'Complete Fitness Club','Uploads/complete-fitness-club.jpg',9850446659,'Kher,Ambernath,Maharashtra','Ambernath');
+Query OK, 8 rows affected (0.24 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+mysql>
+mysql> insert into Review values(1,'Jay69','Nice Gym'),
+    -> (2,'Adi99','A very nice place to Workout'),
+    -> (4,'Kaushik','Excellent Gym!!!'),
+    -> (4,'dan12','Good place with good trainers'),
+    -> (5,'Jay69','Great Workout'),
+    -> (9,'sam','This Place excellent equipments'),
+    -> (10,'anu','very suppportive trainers'),
+    -> (3,'Chicken','Beautiful gym'),
+    -> (6,'dan12','A place with great ambience'),
+    -> (8,'Chicken','Intense Workout Sessions');
+Query OK, 10 rows affected (0.15 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+mysql>
+mysql> insert into Rating values(4.5,1,'Jay69'),
+    -> (3.5,2,'Adi99'),(4.5,4,'Kaushik'),(3.0,4,'dan12'),
+    -> (3.0,1,'Chicken'),(4.0,2,'anu'),(3.3,3,'sam'),(4.1,3,'Jay69'),
+    -> (3.6,5,'dan12'),(2.8,5,'Adi99'),(3.0,7,'Chicken'),(2.5,7,'anu'),
+    -> (4.0,6,'Adi99'),(2.8,6,'Jay69'),(3.9,8,'Jay69'),(3.6,8,'sam'),
+    -> (2.9,9,'anu'),(3.3,9,'Chicken'),(3.8,10,'Adi99'),(4.0,10,'sam');
+Query OK, 20 rows affected (0.14 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+
+

@@ -1,0 +1,15 @@
+6->Arithmetic op(like,not like,in,not in,isnull,is not null) 
+logical op
+comparison op(=,<,>,!=)
+word comp op(between,not between)
+char funcs(lwr,uppr,trim,replace)
+date op(select now()->gives date)
+add date,date diff,select dayname('2019-10-10')
+
+7->Agg func.s ,clauses order by having group by
+
+8->set operators and joins
+
+9->DCl:Savept,RollBack,Commit
+
+10->views and triggers on db 
